@@ -1,47 +1,15 @@
 package bsi;
 
-import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 public class Main {
-
-    /**
-     *
-     * Method generatres random secret key
-     *
-     * @param n - algorithm-specific metric,
-     *  specified in number of bits.
-     * @param algorithm - algorithm name
-     * @return randomly generated secret key
-     * @throws NoSuchAlgorithmException
-     * @throws NoSuchAlgorithmException
-     */
-    public static SecretKey generateKey(int n, String algorithm) throws NoSuchAlgorithmException, NoSuchAlgorithmException {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
-        keyGenerator.init(n);
-        SecretKey key = keyGenerator.generateKey();
-        return key;
-    }
-
-    /**
-     *
-     * Method generates random initialization vector
-     *
-     * @see IvParameterSpec
-     * @param size - initialization vector size in bytes
-     * @return randomly generated initialization vector
-     */
-    public static IvParameterSpec generateIv(int size) {
-        byte[] iv = new byte[size];
-        new SecureRandom().nextBytes(iv);
-        return new IvParameterSpec(iv);
-    }
-
     /**
      *
      * Method encrypts 10 plan text files with given algorithm.
@@ -66,26 +34,13 @@ public class Main {
      * @throws NoSuchPaddingException
      * @throws IOException
      */
-    public static void main(String[] args){
+    public static void main(String[] args) throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchPaddingException {
 
-        IvParameterSpec iv = generateIv(16);
-        try {
-            SecretKey key = generateKey(128, "AES");
-            for(int i = 1; i<=10;i++) {
-                String input = "text_files\\file" + i + ".txt";
-                String output = "encrypted_files\\file" + i + "AES.txt";
-                try {
-                    EncryptionMethods.encryptAES(input, output, key, iv);
-                    System.out.println(input + " encryption was successful.");
-                } catch(NoSuchAlgorithmException |
-                        IllegalBlockSizeException | InvalidKeyException | BadPaddingException |
-                        InvalidAlgorithmParameterException | NoSuchPaddingException |  IOException e){
-                    e.printStackTrace();
-                }
-            }
-        }catch(NoSuchAlgorithmException e){
-            e.printStackTrace();
-        }
+        KeyPair key = KeyGenerators.generateAsymmetricKeyPair(2048, "RSA");
 
+        var encryptedText = AsymmetricEncryptionMethods.encryptRSA("Czcimy pana", key.getPrivate());
+        var text = AsymmetricDecryptionMethods.decryptRSA(encryptedText, key.getPublic());
+
+        System.out.println(text);
     }
 }

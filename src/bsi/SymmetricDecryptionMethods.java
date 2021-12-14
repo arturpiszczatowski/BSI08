@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * @author Norbert Leśniak
@@ -34,7 +31,7 @@ import java.util.Scanner;
  * @see FileInputStream
  * @see FileOutputStream
  */
-public class DecryptionMethods {
+public class SymmetricDecryptionMethods {
 
     /**
      *

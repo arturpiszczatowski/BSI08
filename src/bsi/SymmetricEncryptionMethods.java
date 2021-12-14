@@ -1,7 +1,6 @@
 package bsi;
 
 import javax.crypto.*;
-import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,7 +32,7 @@ import java.security.NoSuchAlgorithmException;
  * @see FileOutputStream
  *
  */
-public class EncryptionMethods {
+public class SymmetricEncryptionMethods {
     /**
      *
      * Method encrypts file using AES-CBC algorithm
