@@ -1,4 +1,4 @@
-package bsi;
+package bsi.encryption;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
  * @author Artur Piszczatowski
  * Source: https://www.baeldung.com/java-aes-encryption-decryption
  *
- *This class consists exclusively of static methods that encrypt text files.
+ *This class consists exclusively of static methods that decrypt encrypted text files.
  * Algorithms used:
  * AES/CBC/PKCS5PADDING
  * TripleDES/CBC/PKCS5Padding
@@ -30,15 +30,16 @@ import java.security.NoSuchAlgorithmException;
  * @see InvalidKeyException
  * @see FileInputStream
  * @see FileOutputStream
- *
  */
-public class SymmetricEncryptionMethods {
+
+public class SymmetricDecryptionMethods {
+
     /**
      *
-     * Method encrypts file using AES-CBC algorithm
+     * Method decrypts encrypted file using AES-CBC algorithm
      *
-     * @param inputFile - input text file directory
-     * @param outputFile - output encrypted text file directory
+     * @param inputFile - input text file path
+     * @param outputFile - output encrypted text file path
      * @param key - the encryption key
      * @param iv - the initialization vector
      * @throws NoSuchPaddingException
@@ -49,13 +50,13 @@ public class SymmetricEncryptionMethods {
      * @throws IllegalBlockSizeException
      * @throws IOException
      */
-    public static void encryptAES(String inputFile, String outputFile, SecretKey key,
+    public static void decryptAES(String inputFile, String outputFile, SecretKey key,
                                   IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException,
             BadPaddingException, IllegalBlockSizeException, IOException {
 
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-        cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+        cipher.init(Cipher.DECRYPT_MODE, key, iv);
 
         FileInputStream inputStream = new FileInputStream(inputFile);
         FileOutputStream outputStream = new FileOutputStream(outputFile);
@@ -78,12 +79,13 @@ public class SymmetricEncryptionMethods {
         inputStream.close();
         outputStream.close();
     }
+
     /**
      *
-     * Method encrypts file using 3DES algorithm
+     * Method decrypts encrypted file using 3DES algorithm
      *
-     * @param inputFile - input text file directory
-     * @param outputFile - output encrypted text file directory
+     * @param inputFile - input text file path
+     * @param outputFile - output encrypted text file path
      * @param key - the encryption key
      * @param iv - the initialization vector
      * @throws NoSuchPaddingException
@@ -94,12 +96,13 @@ public class SymmetricEncryptionMethods {
      * @throws IllegalBlockSizeException
      * @throws IOException
      */
-    public static void encrypt3DES(String inputFile, String outputFile, SecretKey key,
+    public static void decrypt3DES(String inputFile, String outputFile, SecretKey key,
                                    IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException,
-            IOException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException {
+            IOException, BadPaddingException, IllegalBlockSizeException,
+            InvalidAlgorithmParameterException, InvalidKeyException {
 
         Cipher cipher = Cipher.getInstance("TripleDES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+        cipher.init(Cipher.DECRYPT_MODE, key, iv);
 
         FileInputStream inputStream = new FileInputStream(inputFile);
         FileOutputStream outputStream = new FileOutputStream(outputFile);
@@ -122,12 +125,13 @@ public class SymmetricEncryptionMethods {
         inputStream.close();
         outputStream.close();
     }
+
     /**
      *
-     * Method encrypts file using Blowfish algorithm
+     * Method decrypts encrypted file using Blowfish algorithm
      *
-     * @param inputFile - input text file directory
-     * @param outputFile - output encrypted text file directory
+     * @param inputFile - input text file path
+     * @param outputFile - output encrypted text file path
      * @param key - the encryption key
      * @throws NoSuchPaddingException
      * @throws NoSuchAlgorithmException
@@ -137,12 +141,12 @@ public class SymmetricEncryptionMethods {
      * @throws IllegalBlockSizeException
      * @throws IOException
      */
-    public static void encryptBlowfish(String inputFile, String outputFile, SecretKey key)
+    public static void decryptBlowfish(String inputFile, String outputFile, SecretKey key)
             throws NoSuchPaddingException, NoSuchAlgorithmException,
             IOException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException, InvalidKeyException {
 
         Cipher cipher = Cipher.getInstance("Blowfish");
-        cipher.init(Cipher.ENCRYPT_MODE, key);
+        cipher.init(Cipher.DECRYPT_MODE, key);
 
         FileInputStream inputStream = new FileInputStream(inputFile);
         FileOutputStream outputStream = new FileOutputStream(outputFile);
@@ -165,4 +169,5 @@ public class SymmetricEncryptionMethods {
         inputStream.close();
         outputStream.close();
     }
+
 }

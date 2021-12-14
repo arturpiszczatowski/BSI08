@@ -1,4 +1,4 @@
-package bsi;
+package bsi.encryption;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -14,7 +14,8 @@ import java.security.SecureRandom;
  * Source: https://www.baeldung.com/java-aes-encryption-decryption
  * Source: https://www.geeksforgeeks.org/asymmetric-encryption-cryptography-in-java/
  *
- *This class consists exclusively of static methods that generate keys.
+ * This class consists exclusively of static methods that generate keys or are requiered
+ * to generate one.
  *
  * @see IvParameterSpec
  * @see SecretKey
@@ -75,5 +76,24 @@ public class KeyGenerators {
         byte[] iv = new byte[size];
         new SecureRandom().nextBytes(iv);
         return new IvParameterSpec(iv);
+    }
+
+    /**
+     *
+     * Method calculates modulo of a to the power of b
+     * which is necessary for Diffie-Hellman Key exchange algorithm
+     *
+     * @see Math
+     * @param a - public key 1 / generated key 1
+     * @param b - private key
+     * @param p - public key 2 / generated key 2
+     * @return
+     */
+    private static long power(long a, long b, long p)
+    {
+        if (b == 1)
+            return a;
+        else
+            return (((long)Math.pow(a, b)) % p);
     }
 }
